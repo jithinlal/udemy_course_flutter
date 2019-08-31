@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'question.dart';
-import 'answer.dart';
+import 'package:flutter_complete_guide/result.dart';
+import 'package:flutter_complete_guide/quiz.dart';
 
 void main() => runApp(MyHomePage());
 
@@ -14,9 +13,24 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final _questions = [
+    {
+      'questionText': 'what is your favorite color?',
+      'answers': ['Black', 'Red', 'Blue', 'Green', 'White']
+    },
+    {
+      'questionText': 'what is your favorite place?',
+      'answers': ['Paris', 'New York', 'Mumbai', 'Hong Kong', 'Sydney']
+    },
+    {
+      'questionText': 'what is your favorite animal?',
+      'answers': ['Snake', 'Lion', 'Tiger', 'Panda', 'Dog']
+    },
+  ];
   int _questionIndex = 0;
 
   void _answerQuestions() {
+    if (_questionIndex < _questions.length) {}
     setState(() {
       _questionIndex++;
     });
@@ -24,38 +38,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var questions = [
-      {
-        'questionText': 'what is your favorite color?',
-        'answers': ['Black', 'Red', 'Blue', 'Green', 'White']
-      },
-      {
-        'questionText': 'what is your favorite place?',
-        'answers': ['Paris', 'New York', 'Mumbai', 'Hong Kong', 'Sydney']
-      },
-      {
-        'questionText': 'what is your favorite animal?',
-        'answers': ['Snake', 'Lion', 'Tiger', 'Panda', 'Dog']
-      },
-    ];
-
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text('My First App'),
         ),
         body: Center(
-          child: Column(
-            children: <Widget>[
-              Question(
-                questions[_questionIndex]['questionText'],
-              ),
-              ...(questions[_questionIndex]['answers'] as List<String>)
-                  .map((answer) {
-                return Answer(_answerQuestions, answer);
-              }).toList(),
-            ],
-          ),
+          child: _questionIndex < _questions.length
+              ? Quiz(
+                  answerQuestion: _answerQuestions,
+                  questionIndex: _questionIndex,
+                  questions: _questions,
+                )
+              : Result(),
         ),
       ),
     );
