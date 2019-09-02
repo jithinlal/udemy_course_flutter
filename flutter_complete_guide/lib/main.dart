@@ -16,21 +16,47 @@ class _MyHomePageState extends State<MyHomePage> {
   final _questions = [
     {
       'questionText': 'what is your favorite color?',
-      'answers': ['Black', 'Red', 'Blue', 'Green', 'White']
+      'answers': [
+        {'text': 'Black', 'score': 1},
+        {'text': 'Red', 'score': 2},
+        {'text': 'Blue', 'score': 3},
+        {'text': 'Green', 'score': 4},
+        {'text': 'White', 'score': 5}
+      ]
     },
     {
       'questionText': 'what is your favorite place?',
-      'answers': ['Paris', 'New York', 'Mumbai', 'Hong Kong', 'Sydney']
+      'answers': [
+        {'text': 'Paris', 'score': 1},
+        {'text': 'New York', 'score': 2},
+        {'text': 'Mumbai', 'score': 3},
+        {'text': 'Hong Kong', 'score': 4},
+        {'text': 'Sydney', 'score': 5}
+      ]
     },
     {
       'questionText': 'what is your favorite animal?',
-      'answers': ['Snake', 'Lion', 'Tiger', 'Panda', 'Dog']
+      'answers': [
+        {'text': 'Snake', 'score': 1},
+        {'text': 'Lion', 'score': 2},
+        {'text': 'Tiger', 'score': 3},
+        {'text': 'Panda', 'score': 4},
+        {'text': 'Dog', 'score': 5}
+      ]
     },
   ];
   int _questionIndex = 0;
+  int _totalScore = 0;
 
-  void _answerQuestions() {
-    if (_questionIndex < _questions.length) {}
+  void _resetQuiz() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
+  }
+
+  void _answerQuestions(int score) {
+    _totalScore += score;
     setState(() {
       _questionIndex++;
     });
@@ -41,7 +67,9 @@ class _MyHomePageState extends State<MyHomePage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('My First App'),
+          title: Text(
+            'My First App',
+          ),
         ),
         body: Center(
           child: _questionIndex < _questions.length
@@ -50,7 +78,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   questionIndex: _questionIndex,
                   questions: _questions,
                 )
-              : Result(),
+              : Result(
+                  _totalScore,
+                  _resetQuiz,
+                ),
         ),
       ),
     );
