@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 
-class Txt extends StatefulWidget {
-  @override
-  _TxtState createState() => _TxtState();
-}
-
-class _TxtState extends State<Txt> {
+class Txt extends StatelessWidget {
+  final String comment;
+  Txt({@required this.comment});
   @override
   Widget build(BuildContext context) {
     return Text(
-      'Hai',
+      comment,
       style: TextStyle(
         fontSize: 30,
         fontWeight: FontWeight.bold,
