@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="android" name="Android">
+      <configuration>
+        <option name="GEN_FOLDER_RELATIVE_PATH_APT" value="/../../udemy_course_flutter/gen" />
+        <option name="GEN_FOLDER_RELATIVE_PATH_AIDL" value="/../../udemy_course_flutter/gen" />
+        <option name="MANIFEST_FILE_RELATIVE_PATH" value="/../../udemy_course_flutter/AndroidManifest.xml" />
+        <option name="RES_FOLDER_RELATIVE_PATH" value="/../../udemy_course_flutter/res" />
+        <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/../../udemy_course_flutter/assets" />
+        <option name="LIBS_FOLDER_RELATIVE_PATH" value="/../../udemy_course_flutter/libs" />
+        <option name="PROGUARD_LOGS_FOLDER_RELATIVE_PATH" value="/../../udemy_course_flutter/proguard_logs" />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" generated="true" />
+      <excludeFolder url="file://$MODULE_DIR$/expense_tracker/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/expense_tracker/build" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_assignment_1/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_assignment_1/build" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_complete_guide/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_complete_guide/build" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
