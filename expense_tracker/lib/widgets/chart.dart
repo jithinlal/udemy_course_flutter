@@ -9,6 +9,9 @@ class Chart extends StatelessWidget {
 
   List<Map<String, Object>> get _groupedTransactionValues {
     return List.generate(7, (index) {
+      // var today = DateTime.now();
+      // var weekDayNumber = today.weekday;
+      // var previousSunday = today.subtract(Duration(days: weekDayNumber));
       final weekDay = DateTime.now().subtract(
         Duration(days: index),
       );
