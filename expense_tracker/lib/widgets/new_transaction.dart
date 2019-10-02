@@ -52,67 +52,74 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            TextField(
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 5,
+        child: Container(
+          padding: EdgeInsets.only(
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              TextField(
 //                    onChanged: (val) {
 //                      this.titleInput = val;
 //                    },
-              controller: this._titleController,
-              decoration: InputDecoration(
-                labelText: 'Title',
+                controller: this._titleController,
+                decoration: InputDecoration(
+                  labelText: 'Title',
+                ),
+                onSubmitted: (_) => _submitData(),
               ),
-              onSubmitted: (_) => _submitData(),
-            ),
-            TextField(
+              TextField(
 //                    onChanged: (val) {
 //                      this.amountInput = val;
 //                    },
-              controller: this._amountController,
-              decoration: InputDecoration(
-                labelText: 'Amount',
+                controller: this._amountController,
+                decoration: InputDecoration(
+                  labelText: 'Amount',
+                ),
+                keyboardType: TextInputType.number,
+                onSubmitted: (_) => _submitData(),
               ),
-              keyboardType: TextInputType.number,
-              onSubmitted: (_) => _submitData(),
-            ),
-            Container(
-              height: 70,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      this._selectedDate == null
-                          ? 'No date chosen'
-                          : DateFormat.yMd().format(this._selectedDate),
-                    ),
-                  ),
-                  FlatButton(
-                    child: Text(
-                      'Choose date',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+              Container(
+                height: 70,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        this._selectedDate == null
+                            ? 'No date chosen'
+                            : DateFormat.yMd().format(this._selectedDate),
                       ),
                     ),
-                    textColor: Theme.of(context).primaryColor,
-                    onPressed: this._presentDatePicker,
-                  ),
-                ],
+                    FlatButton(
+                      child: Text(
+                        'Choose date',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      textColor: Theme.of(context).primaryColor,
+                      onPressed: this._presentDatePicker,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            RaisedButton(
-              onPressed: _submitData,
-              color: Theme.of(context).primaryColor,
-              textColor: Theme.of(context).textTheme.button.color,
-              child: Text(
-                'Add Transaction',
-              ),
-            )
-          ],
+              RaisedButton(
+                onPressed: _submitData,
+                color: Theme.of(context).primaryColor,
+                textColor: Theme.of(context).textTheme.button.color,
+                child: Text(
+                  'Add Transaction',
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

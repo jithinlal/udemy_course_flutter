@@ -1,10 +1,24 @@
+import 'dart:io';
+
 import 'package:expense_tracker/model/Transaction.dart';
 import 'package:expense_tracker/widgets/chart.dart';
 import 'package:expense_tracker/widgets/new_transaction.dart';
 import 'package:expense_tracker/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  /*
+  * Code snippet that disables portraid mode
+  */
+
+//  SystemChrome.setPreferredOrientations(
+//    [
+//      DeviceOrientation.portraitUp,
+//      DeviceOrientation.portraitDown,
+//    ],
+//  );
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -53,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _startAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
         context: ctx,
+        isScrollControlled: true,
         builder: (BuildContext bctx) {
           return GestureDetector(
             child: NewTransaction(_addNewTransaction),
@@ -61,6 +76,8 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         });
   }
+
+  bool _showChart = false;
 
   final List<Transaction> _userTransactions = [
 //    Transaction(
@@ -113,33 +130,81 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Expense Tracker'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.add,
-            ),
-            onPressed: () {
-              _startAddNewTransaction(context);
-            },
+    final _isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+    final PreferredSizeWidget appBar = AppBar(
+      title: Text('Expense Tracker'),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(
+            Icons.add,
           ),
-        ],
+          onPressed: () {
+            _startAddNewTransaction(context);
+          },
+        ),
+      ],
+    );
+
+    final mediaQuery = MediaQuery.of(context);
+    final availableHeight = mediaQuery.size.height -
+        appBar.preferredSize.height -
+        mediaQuery.padding.top;
+
+    final _txListWidget = Container(
+      height: availableHeight * 0.7,
+      child: TransactionList(
+        _userTransactions,
+        _deleteTransaction,
       ),
-      body: Column(
-        children: <Widget>[
-          Chart(_recentTransactions),
-          TransactionList(_userTransactions, _deleteTransaction),
-        ],
+    );
+
+    final _txChartWidget = Container(
+      child: Chart(this._recentTransactions),
+      height: availableHeight * (_isLandscape ? 0.7 : 0.3),
+    );
+
+    final _txListOrChartWidget = _showChart ? _txChartWidget : _txListWidget;
+    final _switchButtonWidget = Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text('Show Chart'),
+        Switch.adaptive(
+          activeColor: Theme.of(context).accentColor,
+          value: this._showChart,
+          onChanged: (val) {
+            setState(() {
+              this._showChart = val;
+            });
+          },
+        ),
+      ],
+    );
+
+    return Scaffold(
+      appBar: appBar,
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            if (mediaQuery.orientation == Orientation.landscape) ...[
+              _switchButtonWidget,
+              _txListOrChartWidget
+            ] else ...[
+              _txChartWidget,
+              _txListWidget
+            ]
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          _startAddNewTransaction(context);
-        },
-      ),
+      floatingActionButton: Platform.isIOS
+          ? Container()
+          : FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () {
+                _startAddNewTransaction(context);
+              },
+            ),
     );
   }
 }
