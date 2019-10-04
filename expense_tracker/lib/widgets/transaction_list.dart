@@ -1,6 +1,6 @@
 import 'package:expense_tracker/model/Transaction.dart';
+import 'package:expense_tracker/widgets/transaction_item.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> _transactions;
@@ -33,42 +33,9 @@ class TransactionList extends StatelessWidget {
           )
         : ListView.builder(
             itemBuilder: (BuildContext context2, index) {
-              return Card(
-                elevation: 5,
-                margin: EdgeInsets.symmetric(
-                  vertical: 8.0,
-                  horizontal: 5.0,
-                ),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    radius: 30,
-                    child: Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: FittedBox(
-                        child: Text('\$${_transactions[index].amount}'),
-                      ),
-                    ),
-                  ),
-                  title: Text(
-                    _transactions[index].title,
-                    style: Theme.of(context).textTheme.title,
-                  ),
-                  subtitle: Text(
-                    DateFormat.yMMMd().format(_transactions[index].date),
-                  ),
-                  trailing: MediaQuery.of(context).size.width > 460
-                      ? FlatButton.icon(
-                          onPressed: () => _deleteTx(_transactions[index].id),
-                          icon: Icon(Icons.delete),
-                          label: Text('Delete'),
-                          textColor: Theme.of(context).errorColor,
-                        )
-                      : IconButton(
-                          icon: Icon(Icons.delete),
-                          color: Theme.of(context).errorColor,
-                          onPressed: () => _deleteTx(_transactions[index].id),
-                        ),
-                ),
+              return TransactionItem(
+                transaction: _transactions[index],
+                deleteTx: _deleteTx,
               );
             },
             itemCount: _transactions.length,
