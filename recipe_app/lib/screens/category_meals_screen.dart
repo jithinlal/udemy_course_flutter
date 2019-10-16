@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/dummy_data.dart';
 import 'package:recipe_app/models/meal.dart';
 import 'package:recipe_app/widgets/meal_item.dart';
 
 class CategoryMealsScreen extends StatefulWidget {
   static const routeName = '/category-meals';
+
+  final List<Meal> _availableMeals;
+  CategoryMealsScreen(this._availableMeals);
 
   @override
   _CategoryMealsScreenState createState() => _CategoryMealsScreenState();
@@ -25,7 +27,7 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
       final categoryId = routeArgs['id'];
       categoryColor = routeArgs['color'] as Color;
 
-      displayedMeals = DUMMY_MEALS.where((meal) {
+      displayedMeals = widget._availableMeals.where((meal) {
         return meal.categories.contains(categoryId);
       }).toList();
     }
