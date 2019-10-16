@@ -12,9 +12,8 @@ class MealItem extends StatelessWidget {
   final int duration;
   final Complexity complexity;
   final Affordability affordability;
-  final Function removeItem;
 
-  MealItem({@required this.meal, @required this.removeItem})
+  MealItem({@required this.meal})
       : id = meal.id,
         title = meal.title,
         imageUrl = meal.imageUrl,
@@ -64,7 +63,7 @@ class MealItem extends StatelessWidget {
     )
         .then((id) {
       if (id != null) {
-        removeItem(id);
+//        removeItem(id);
       }
     });
   }
