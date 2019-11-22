@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:myshop/providers/product.dart';
 import 'package:myshop/screens/product_detail_screen.dart';
+import 'package:provider/provider.dart';
 
 class ProductItem extends StatelessWidget {
-  final Product product;
-
-  ProductItem({
-    this.product,
-  });
-
   @override
   Widget build(BuildContext context) {
+    final product = Provider.of<Product>(
+      context,
+      listen: false,
+    );
     return GridTile(
       child: GestureDetector(
         onTap: () {
@@ -28,12 +27,16 @@ class ProductItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         child: GridTileBar(
           backgroundColor: Colors.black87,
-          leading: IconButton(
-            icon: Icon(
-              Icons.favorite,
+          leading: Consumer<Product>(
+            builder: (_, product, child) => IconButton(
+              icon: Icon(
+                product.isFavorite ? Icons.favorite : Icons.favorite_border,
+              ),
+              onPressed: () {
+                product.toggleFavoriteStatus();
+              },
+              color: Theme.of(context).accentColor,
             ),
-            onPressed: () {},
-            color: Theme.of(context).accentColor,
           ),
           title: Text(
             product.title,
