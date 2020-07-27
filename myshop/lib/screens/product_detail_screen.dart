@@ -1,6 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:myshop/providers/cart.dart';
 import 'package:provider/provider.dart';
 
 import 'package:myshop/providers/products.dart';
@@ -16,6 +15,15 @@ class ProductDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(loadedProduct.title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.shopping_cart),
+            onPressed: () {
+              Provider.of<Cart>(context)
+                  .addItem(productId, loadedProduct.price, loadedProduct.title);
+            },
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
