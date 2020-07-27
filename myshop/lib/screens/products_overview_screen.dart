@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myshop/providers/cart.dart';
 import 'package:myshop/screens/cart_screen.dart';
+import 'package:myshop/widgets/app_drawer.dart';
 import 'package:myshop/widgets/badge.dart';
 
 import 'package:myshop/widgets/products_grid.dart';
@@ -46,6 +47,10 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               )
             ],
           ),
+          // we use consumer only if we want to rebuild a tiny piece of the UI
+          // rather than in the provider the entire build class is rebuilt
+          // here as you can see the thing inside the builder method the count is rebuilt
+          // while the child and all other widgets is not rebuilt
           Consumer<Cart>(
             builder: (_, cartData, child) => Badge(
               child: child,
@@ -62,6 +67,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
           ),
         ],
       ),
+      drawer: AppDrawer(),
       body: ProductsGrid(_showOnlyFavorites),
     );
   }
