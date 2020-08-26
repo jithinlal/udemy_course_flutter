@@ -20,8 +20,15 @@ class Products with ChangeNotifier {
     try {
       const url = 'https://my-shop-flutter-ce73e.firebaseio.com/products.json';
       final response = await http.get(url);
-      final data = json.decode(response.body) as Map<String, dynamic>;
       final List<Product> loadedProducts = [];
+      final data = json.decode(response.body) as Map<String, dynamic>;
+
+      if (data == null) {
+        _items = [];
+        notifyListeners();
+        return;
+      }
+
       data.forEach((key, value) {
         loadedProducts.add(Product(
           id: key,
